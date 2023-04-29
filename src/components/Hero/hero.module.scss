@@ -1,0 +1,50 @@
+@import '../../scss/variables';
+
+.hero{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 30px;
+
+  @media (max-width: 725px) {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 60px);
+    padding: 0;
+  }
+
+  .title_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .title{
+      font-size: 30px;
+      width: 100%;
+      border-bottom: 3px solid $second-color;
+      padding-bottom: 5px;
+      margin: 10px 0 10px;
+      text-align: center;
+      @media (max-width: 400px) {
+        font-size: 25px;
+      }
+    }
+    .name{
+      font-size: 45px;
+      text-align: center;
+      @media (max-width: 400px) {
+        font-size: 30px;
+      }
+    }
+  }
+
+  .image{
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: gray;
+    object-fit: cover;
+  }
+}

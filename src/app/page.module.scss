@@ -1,3 +1,9 @@
+@import '../scss/variables';
+
 .main{
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 120px);
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 80px;
 }
