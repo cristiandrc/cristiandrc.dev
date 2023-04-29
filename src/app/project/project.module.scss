@@ -1,0 +1,22 @@
+.projects{
+  min-height: calc(100vh - 120px);
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 80px;
+
+  @media (max-width: 725px) {
+    padding: 40px 10px 10px;
+  }
+
+  &_title{
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  .cards_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
