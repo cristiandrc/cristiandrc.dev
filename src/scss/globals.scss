@@ -1,0 +1,12 @@
+@import './normalize.scss';
+@import './variables';
+
+
+:export {
+  primaryColor: $primary-color;
+  primaryColor: $second-color;
+}
+
+body{
+  background-color: $primary-color;
+}
