@@ -21,7 +21,7 @@ const Card = ({ name, img, page, github }: CardTypes) => {
         {page && (
           <a className={styles.link} target="_blank" href={page}>
             <MdLanguage />
-            projects
+            Projects
           </a>
         )}
         <a className={styles.link} target="_blank" href={github}>

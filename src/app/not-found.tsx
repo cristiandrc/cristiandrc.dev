@@ -1,14 +1,19 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import styles from "./not-found.module.scss";
 
+declare global {
+  var dataLayer: [any];
+}
+
 const NotFound = () => {
-  // useEffect(() => {
-  //   if (dataLayer) {
-  //     dataLayer.push({ event: "error_404" });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (dataLayer) {
+      dataLayer.push({ event: "error_404" });
+    }
+  }, []);
   redirect("/");
   return (
     <div className={styles.not_found}>
