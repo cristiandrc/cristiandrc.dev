@@ -7,7 +7,7 @@ const Footer = () => {
       <p>
         Developed By <br /> Cristian Rojas
       </p>
-      <p>With React.js</p>
+      <p>With Next.js</p>
     </div>
   );
 };

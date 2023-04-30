@@ -1,5 +1,5 @@
-import React from "react";
 import Link from "next/link";
+import { Menu } from "../Menu/Menu";
 import styles from "./header.module.scss";
 
 const Header = () => {
@@ -9,16 +9,7 @@ const Header = () => {
         <Link className={styles.logo} href="/">
           CR
         </Link>
-        <nav className={styles.menu}>
-          <ul>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/project">Projects</Link>
-            </li>
-          </ul>
-        </nav>
+        <Menu />
       </div>
     </header>
   );
