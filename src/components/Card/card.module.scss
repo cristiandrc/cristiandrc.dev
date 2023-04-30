@@ -12,6 +12,7 @@
   justify-content: space-between;
   background-color: $second-color;
   box-shadow: 0 5px 25px -8px rgb(97 218 250 / 50%);
+  @include fadeInUpAnimation();
   img {
     width: 266px;
     height: 197px;

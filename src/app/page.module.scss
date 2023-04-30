@@ -9,6 +9,7 @@
 
   .content_info{
     display: inline-grid;
+    overflow-x: hidden;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
     align-items: center;

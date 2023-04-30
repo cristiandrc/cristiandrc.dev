@@ -1,2 +1,49 @@
 $primary-color: #283543;
 $second-color: #dadada;
+
+
+
+@mixin fadeInUpAnimation() {
+  opacity: 0;
+  animation-name: fadeInUp;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes fadeInUp {
+  0% { 
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  70% { 
+    opacity: .5;
+  }
+  100% { 
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+
+@mixin fadeInsideAnimation($size: -50px) {
+  opacity: 0;
+  animation-name: fadeInLeft;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  transform: translateX($size);
+}
+
+@keyframes fadeInLeft {
+  0% { 
+    opacity: 0;
+  }
+  70% { 
+    opacity: .5;
+  }
+  100% { 
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
