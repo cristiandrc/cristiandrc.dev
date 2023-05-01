@@ -47,3 +47,21 @@ $second-color: #dadada;
     transform: translateX(0px);
   }
 }
+
+@mixin fadeInBackAnimation() {
+  animation-name: fadeInRotate;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fadeInRotate {
+  0% {
+    transform: translateY(-50px);
+  }
+  100% { 
+    opacity: 0;
+    transform: translateY(-1000px) rotate(360deg);
+  }
+}

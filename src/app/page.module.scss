@@ -1,7 +1,7 @@
 @import '../scss/variables';
 
 .main{
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 60px);
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
@@ -16,7 +16,7 @@
     grid-row: auto;
     gap: 80px;
     padding: 30px;
-    margin: 50px 0;
+    margin: 50px auto;
     width: 100%;
   
     @media (max-width: 725px) {

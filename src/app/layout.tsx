@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header/Header";
 import { Gtm } from "@/components/Gtm/Gtm";
 import Script from "next/script";
+import { Background } from "@/components/Background/Background";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,6 +44,7 @@ export default function RootLayout({
       />
       <body className={inter.className}>
         <Gtm />
+        <Background />
         <Header />
         {children}
         <Footer />
