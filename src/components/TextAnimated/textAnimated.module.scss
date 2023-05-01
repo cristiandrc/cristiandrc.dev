@@ -1,0 +1,30 @@
+@import '../../scss/variables';
+
+.text_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 3px solid $second-color;
+  margin: 5px 0;
+
+  .text_animated{
+    display: inline-block;
+    cursor: default;
+    color: $second-color;
+    font-size: 30px;
+    text-align: center;
+    @media (max-width: 400px) {
+      font-size: 25px;
+    }
+    &.text_space{
+      display: none;
+    }
+  }
+  .text_space + .text_animated{
+    margin-left: 8px;
+  }
+  
+  .animate{
+    @include rubberBandAnimation();
+  }
+}

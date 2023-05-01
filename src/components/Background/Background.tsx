@@ -10,8 +10,8 @@ import styles from "./background.module.scss";
 const GenerateRandomStyles = () => {
   const styles = {
     left: `${Math.floor(Math.random() * (100 - 0 + 1) + 0)}vw`,
-    height: `${Math.floor(Math.random() * 100)}px`,
-    width: `${Math.floor(Math.random() * 100)}px`,
+    height: `0px`,
+    width: `0px`,
     borderRadius: `${Math.floor(Math.random() * 20) + 5}px`,
     animationDelay: `${Math.floor(Math.random() * 10)}s`,
     animationDuration: `${Math.floor(Math.random() * 20) + 5}s`,
