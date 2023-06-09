@@ -14,6 +14,7 @@ export const metadata = {
   description:
     "Cristian Rojas FrontEnd Developer | React | Next.js | JavaScript | TypeScript | Vtex IO | Git | Node | sass | css | html",
   authors: { name: "Cristian Rojas" },
+  robots: { index: true },
   keywords: [
     "Cristian rojas FrontEnd Developer",
     "Cristian Rojas Desarrollador web",
@@ -28,6 +29,9 @@ export const metadata = {
     "css",
     "html",
   ],
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({
