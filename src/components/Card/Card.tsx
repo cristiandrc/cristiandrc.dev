@@ -15,16 +15,16 @@ interface CardTypes {
 const Card = ({ name, img, page, github }: CardTypes) => {
   return (
     <div className={styles.card}>
-      <Image src={img} alt={name} />
+      <Image src={img} alt={name} title={name} />
       <h2 className={styles.card_title}>{name}</h2>
       <div className={styles.link_content}>
         {page && (
-          <a className={styles.link} target="_blank" href={page}>
+          <a className={styles.link} target="_blank" href={page} title={name}>
             <MdLanguage />
             Projects
           </a>
         )}
-        <a className={styles.link} target="_blank" href={github}>
+        <a className={styles.link} target="_blank" href={github} title={name}>
           <DiGithubBadge /> Code
         </a>
       </div>

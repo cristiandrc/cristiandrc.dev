@@ -28,6 +28,10 @@ const Data = [
     github: "https://github.com/cristiandrc/weatherApp",
   },
 ];
+
+export const metadata = {
+  title: "Projects - Cristian Rojas",
+};
 const Project = () => {
   return (
     <section className={styles.projects}>

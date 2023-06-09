@@ -14,6 +14,7 @@ const Contact = () => {
           href="https://www.linkedin.com/in/cristianrojasc/"
           target="_blank"
           rel="noopener"
+          title="Link Linkedin"
         >
           <AiFillLinkedin size="80px" />
         </Link>
@@ -22,6 +23,7 @@ const Contact = () => {
           target="_blank"
           rel="noopener"
           className={styles.contact_icons_link}
+          title="Link Github"
         >
           <DiGithubBadge size="89" />
         </Link>
@@ -30,6 +32,7 @@ const Contact = () => {
         target="_blank"
         href="https://drive.google.com/file/d/1b92n3pmjnrfyNjaM9XLXBZr-iyr8glyT/view?usp=sharing"
         rel="noopener"
+        title="Link curriculum vitae"
         className={styles.contact_cv}
       >
         Download CV

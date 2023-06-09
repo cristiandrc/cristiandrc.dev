@@ -35,7 +35,11 @@ const Menu = () => {
       >
         {ROUTES.map(({ href, word }, i) => (
           <li key={i}>
-            <Link className={`${path === href && styles.active}`} href={href}>
+            <Link
+              className={`${path === href && styles.active}`}
+              href={href}
+              title={word}
+            >
               {word}
             </Link>
           </li>

@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <header className={`${styles.header} ${fixed ? styles.fixed : ""}`}>
       <div className={styles.header_container}>
-        <Link className={styles.logo} href="/">
+        <Link className={styles.logo} href="/" title="Logo">
           CR
         </Link>
         <Menu />
