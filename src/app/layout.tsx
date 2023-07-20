@@ -41,10 +41,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=GTM-56ZQ33K"
-        strategy="afterInteractive"
-      />
       <body className={inter.className}>
         <Gtm />
         <Background />
