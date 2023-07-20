@@ -10,9 +10,9 @@ import { Background } from "@/components/Background/Background";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Portfolio - Cristian Rojas Developer",
+  title: "Portfolio - Cristian Rojas",
   description:
-    "Cristian Rojas FrontEnd Developer | React | Next.js | JavaScript | TypeScript | Vtex IO | Git | Node | sass | css | html",
+    "Experienced FrontEnd developer specializing in React, TypeScript, and modern tools. Crafting exceptional and fast digital experiences. Explore my website now!",
   authors: { name: "Cristian Rojas" },
   robots: { index: true },
   keywords: [

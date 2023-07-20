@@ -10,6 +10,10 @@ const Hero = () => {
       <div className={styles.title_container}>
         <TextAnimated text="FRONTEND DEVELOPER" />
         <h1 className={styles.name}>CRISTIAN ROJAS</h1>
+        <p>
+          Hello! I&apos;m Cristian Rojas, a frontend developer specializing in
+          React, TypeScript, and modern tools. Welcome to my portfolio!
+        </p>
       </div>
       <Image
         className={styles.image}

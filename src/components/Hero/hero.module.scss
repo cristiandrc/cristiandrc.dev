@@ -39,6 +39,15 @@
         font-size: 30px;
       }
     }
+
+    p{
+      max-width: 400px;
+      padding: 5px 10px 0;
+      text-align: center;
+      @media (max-width: 400px) {
+        max-width: 300px;
+      }
+    }
   }
 
   .image{
