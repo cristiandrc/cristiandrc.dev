@@ -30,7 +30,7 @@ const Data = [
 ];
 
 export const metadata = {
-  title: "Projects - Cristian Rojas",
+  title: "Projects | Cristian Rojas Developer",
   alternates: {
     canonical: "/project",
   },

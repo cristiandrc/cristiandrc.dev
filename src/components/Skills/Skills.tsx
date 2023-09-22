@@ -10,7 +10,7 @@ import styles from "./skills.module.scss";
 const Skills = () => {
   return (
     <div className={styles.skills}>
-      <h3>SKILLS</h3>
+      <h2>SKILLS</h2>
       <ul className={styles.skills_list}>
         <li className={styles.skills_items}>
           <HtmlIcon />

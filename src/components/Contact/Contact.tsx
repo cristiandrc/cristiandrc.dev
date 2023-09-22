@@ -7,7 +7,7 @@ import Link from "next/link";
 const Contact = () => {
   return (
     <div className={styles.contact}>
-      <h3>CONTACT</h3>
+      <h2>CONTACT</h2>
       <div className={styles.contact_icons}>
         <Link
           className={styles.contact_icons_link}

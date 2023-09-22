@@ -10,7 +10,7 @@ import { Background } from "@/components/Background/Background";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Portfolio - Cristian Rojas",
+  title: "Portfolio | Cristian Rojas Developer",
   description:
     "Experienced FrontEnd developer specializing in React, TypeScript, and modern tools. Crafting exceptional and fast digital experiences. Explore my website now!",
   authors: { name: "Cristian Rojas" },
@@ -40,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="es-CO">
       <body className={inter.className}>
         <Gtm />
         <Background />
