@@ -30,7 +30,7 @@ const Contact = () => {
       </div>
       <a
         target="_blank"
-        href="https://drive.google.com/file/d/1b92n3pmjnrfyNjaM9XLXBZr-iyr8glyT/view?usp=sharing"
+        href="https://drive.google.com/file/d/1MYzx0ccSHaqnrmaTEPdpuoFPzvlxspIb/view?usp=drive_link"
         rel="noopener"
         title="Link curriculum vitae"
         className={styles.contact_cv}
