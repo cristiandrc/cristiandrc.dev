@@ -1,6 +1,5 @@
 import "../scss/globals.scss";
 import { Inter } from "next/font/google";
-import Head from "next/head";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header/Header";
 import { Gtm } from "@/components/Gtm/Gtm";
@@ -41,7 +40,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
+      <head>
         <meta name="country" content="COL" />
         <meta name="language" content="en" />
         <meta name="currency" content="COL" />
@@ -51,7 +50,7 @@ export default function RootLayout({
           href="https://www.cristiandrc.dev"
           data-react-helmet="true"
         />
-      </Head>
+      </head>
       <body className={inter.className}>
         <Gtm />
         <Background />
