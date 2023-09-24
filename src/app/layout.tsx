@@ -14,7 +14,7 @@ export const metadata = {
   description:
     "Experienced FrontEnd developer specializing in React, TypeScript, and modern tools. Crafting exceptional and fast digital experiences. Explore my website now!",
   authors: { name: "Cristian Rojas" },
-  robots: { index: true },
+  robots: { index: true, follow: true },
   keywords: [
     "Cristian rojas FrontEnd Developer",
     "Cristian Rojas Desarrollador web",
@@ -40,7 +40,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es-CO">
+    <html lang="en">
+      <Head>
+        <meta name="country" content="COL" />
+        <meta name="language" content="en" />
+        <meta name="currency" content="COL" />
+        <link
+          rel="alternate"
+          hrefLang="es-CO"
+          href="https://www.cristiandrc.dev"
+          data-react-helmet="true"
+        />
+      </Head>
       <body className={inter.className}>
         <Gtm />
         <Background />
