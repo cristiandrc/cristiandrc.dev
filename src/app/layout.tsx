@@ -15,7 +15,7 @@ export const metadata = {
   authors: { name: "Cristian Rojas" },
   robots: { index: true, follow: true },
   keywords: [
-    "Cristian rojas FrontEnd Developer",
+    "Cristian Rojas FrontEnd Developer",
     "Cristian Rojas Desarrollador web",
     "React",
     "Next.js",
