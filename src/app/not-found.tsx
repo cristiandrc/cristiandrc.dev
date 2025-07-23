@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import styles from "./not-found.module.scss";
 
 declare global {
-  var dataLayer: [any];
+  var dataLayer: any[];
 }
 
 const NotFound = () => {
