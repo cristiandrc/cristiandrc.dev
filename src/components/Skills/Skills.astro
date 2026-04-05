@@ -1,0 +1,73 @@
+---
+import styles from './skills.module.scss';
+import { HtmlIcon }       from '../svg/HtmlIcon';
+import { CssIcon }        from '../svg/CssIcon';
+import { JavaScriptIcon } from '../svg/JavaScriptIcon';
+import { GitIcon }        from '../svg/GitIcon';
+import { ReactIcon }      from '../svg/ReactIcon';
+import { NodeIcon }       from '../svg/NodeIcon';
+import { TypeScriptIcon } from '../svg/TypeScriptIcon';
+
+const coreIcons = [
+  { Component: HtmlIcon,       label: 'HTML' },
+  { Component: CssIcon,        label: 'CSS' },
+  { Component: JavaScriptIcon, label: 'JavaScript' },
+  { Component: TypeScriptIcon, label: 'TypeScript' },
+  { Component: ReactIcon,      label: 'React' },
+  { Component: NodeIcon,       label: 'Node.js' },
+  { Component: GitIcon,        label: 'Git' },
+];
+
+const categories = [
+  {
+    label: 'Frontend',
+    skills: ['React.js', 'Next.js', 'JavaScript', 'TypeScript', 'HTML', 'CSS', 'Sass', 'Liquid'],
+  },
+  {
+    label: 'Backend',
+    skills: ['Node.js', 'Express.js', 'REST APIs', 'GraphQL', 'MongoDB'],
+  },
+  {
+    label: 'Shopify',
+    skills: ['Shopify CLI', 'Checkout Extensibility', 'Shopify Functions', 'Hydrogen', 'Admin & Storefront API', 'Online Store 2.0', 'Metafields', 'OAuth', 'Webhooks'],
+  },
+  {
+    label: 'VTEX IO',
+    skills: ['IO Builder', 'Store Framework', 'Custom Apps', 'GraphQL API', 'OMS integrations', 'Checkout Customization', 'GA4 tracking'],
+  },
+  {
+    label: 'Analytics & SEO',
+    skills: ['Google Analytics 4', 'Google Tag Manager', 'Technical SEO'],
+  },
+  {
+    label: 'Tools & Cloud',
+    skills: ['Git', 'Docker', 'AWS Lambda', 'AWS S3', 'Serverless'],
+  },
+];
+---
+
+<section id="skills" class={styles.skills}>
+  <p class="section-label">// skills</p>
+  <h2 class="section-title">Tech Stack</h2>
+
+  <ul class={styles.skills_icons}>
+    {coreIcons.map(({ Component, label }) => (
+      <li class={styles.skills_icon_item} title={label}>
+        <Component />
+      </li>
+    ))}
+  </ul>
+
+  <div class={styles.skills_categories}>
+    {categories.map(({ label, skills }) => (
+      <div class={styles.category}>
+        <span class={styles.category_label}>{label}</span>
+        <ul class={styles.tag_list}>
+          {skills.map((s) => (
+            <li class={styles.tag}>{s}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>

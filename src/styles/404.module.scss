@@ -1,0 +1,40 @@
+@import '../scss/variables';
+
+.notfound {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+
+  h1 {
+    font-family: $font-mono;
+    font-size: 120px;
+    font-weight: 700;
+    color: $accent-green;
+    line-height: 1;
+  }
+
+  p {
+    color: $text-secondary;
+    font-size: 18px;
+  }
+}
+
+.back_link {
+  font-family: $font-mono;
+  font-size: 14px;
+  color: $accent-green;
+  text-decoration: none;
+  border: 1px solid rgba($accent-green, 0.3);
+  padding: 10px 24px;
+  border-radius: 6px;
+  margin-top: 8px;
+  transition: background-color 200ms;
+
+  &:hover {
+    background-color: rgba($accent-green, 0.1);
+  }
+}

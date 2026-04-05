@@ -1,121 +1,113 @@
-@import '../../scss/variables'; 
+@import '../../scss/variables';
 
 .menu {
-  min-width: 200px;
-  ul {
-    width: 100%;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-    list-style: none;
+  display: flex;
+  align-items: center;
 
-    li{
+  ul {
+    display: flex;
+    gap: 32px;
+    padding: 0;
+
+    li {
       position: relative;
-      a{
+
+      a {
         text-decoration: none;
-        color: $second-color;
-        text-align: center;
-        font-weight: 700;
-        font-size: 18px;
-        letter-spacing: 1px;
+        color: $text-secondary;
+        font-family: $font-mono;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        transition: color 200ms;
+
+        &:hover {
+          color: $accent-green;
+        }
       }
+
       .active {
-        &::after{
-          content: " ";
+        color: $accent-green;
+
+        &::after {
+          content: '';
           position: absolute;
           width: 100%;
-          height: 2px;
-          left: 0px;
-          bottom: -2px;
-          background-color: $second-color;
+          height: 1px;
+          left: 0;
+          bottom: -3px;
+          background-color: $accent-green;
         }
       }
     }
   }
 
   @media (max-width: 725px) {
-    display: flex;
     justify-content: flex-end;
+
     ul {
       position: fixed;
       opacity: 0;
-      z-index: 1;
+      z-index: 9;
       height: 100vh;
-      width: 0vw;
+      width: 0;
       top: -100vh;
       right: 0;
-      bottom: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #283543e7;
-      transition-duration: 0.8s;
-      transition-timing-function: ease;
-      transition-property: top opacity;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      gap: 32px;
+      background-color: rgba($bg-color, 0.97);
+      backdrop-filter: blur(10px);
+      transition: top 0.4s ease, opacity 0.4s ease, width 0s 0.4s;
 
-      li {
-        margin: 15px 0;
+      &.active {
+        top: 0;
+        opacity: 1;
+        width: 100vw;
+        transition: top 0.4s ease, opacity 0.4s ease;
       }
 
-    &.active{
-      top: 0;
-      opacity: 1;
-      width: 100vw;
-    }
+      li a {
+        font-size: 20px;
+      }
     }
   }
 
-  .burger{
+  .burger {
     display: none;
     background: transparent;
-    border: 0px;
-    outline: 0px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
 
     @media (max-width: 725px) {
       display: block;
       position: relative;
-      z-index: 2;
+      z-index: 11;
       width: 30px;
       height: 30px;
     }
 
-    span{
+    span {
       position: absolute;
-      width: 30px;
-      height: 4px;
-      background-color: $second-color;
-      border-radius: 4px;
+      width: 26px;
+      height: 2px;
+      background-color: $text-secondary;
+      border-radius: 2px;
       left: 0;
-      transition: 0.8s ease;
+      transition: 0.4s ease;
 
-      &:first-child{
-        top: 3px;
-      }
-      &:nth-child(2){
-        top: 13px;
-      }
-      &:last-child{
-        bottom: 3px;
-      }
+      &:first-child { top: 4px; }
+      &:nth-child(2) { top: 12px; }
+      &:last-child { top: 20px; }
     }
 
-    &.active{
-      span{
-        &:first-child{
-          transform: rotate(-45deg);
-          top: 13px;
-        }
-        &:nth-child(2){
-          opacity: 0;
-        }
-        &:last-child{
-          transform: rotate(45deg);
-          bottom: 13px;
-        }
-      }
+    &.active span {
+      background-color: $accent-green;
+
+      &:first-child { transform: rotate(-45deg); top: 12px; }
+      &:nth-child(2) { opacity: 0; }
+      &:last-child { transform: rotate(45deg); top: 12px; }
     }
   }
 }

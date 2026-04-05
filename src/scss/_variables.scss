@@ -1,106 +1,80 @@
-$primary-color: #283543;
-$second-color: #dadada;
+// ─── Color palette ───────────────────────────────────────────────
+$bg-color:        #0d1117;
+$bg-surface:      #161b22;
+$bg-surface-2:    #21262d;
+$border-color:    #30363d;
+$accent-green:    #00e676;
+$accent-blue:     #58a6ff;
+$text-primary:    #f0f6fc;
+$text-secondary:  #c9d1d9;
+$text-muted:      #8b949e;
 
+// ─── Legacy aliases (used in existing components) ────────────────
+$primary-color:   $bg-color;
+$second-color:    $text-secondary;
 
+// ─── Typography ──────────────────────────────────────────────────
+$font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
 
+// ─── Animations ──────────────────────────────────────────────────
 @mixin fadeInUpAnimation() {
   opacity: 0;
   animation-name: fadeInUp;
-  animation-duration: 1s;
+  animation-duration: 0.8s;
   animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: ease-out;
 }
 
 @keyframes fadeInUp {
-  0% { 
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  70% { 
-    opacity: .5;
-  }
-  100% { 
-    opacity: 1;
-    transform: translateY(0px);
-  }
+  0%   { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
-
 
 @mixin fadeInsideAnimation($size: -50px) {
   opacity: 0;
   animation-name: fadeInLeft;
-  animation-duration: 1s;
+  animation-duration: 0.8s;
   animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: ease-out;
   transform: translateX($size);
 }
 
 @keyframes fadeInLeft {
-  0% { 
-    opacity: 0;
-  }
-  70% { 
-    opacity: .5;
-  }
-  100% { 
-    opacity: 1;
-    transform: translateX(0px);
-  }
+  0%   { opacity: 0; }
+  100% { opacity: 1; transform: translateX(0px); }
 }
 
 @mixin fadeInBackAnimation() {
-  animation-name: fadeInRotate;
+  animation-name: floatUp;
   animation-fill-mode: forwards;
   animation-timing-function: linear;
-  animation-duration: 10s;
+  animation-duration: 12s;
   animation-iteration-count: infinite;
 }
 
-@keyframes fadeInRotate {
-  0% {
-    transform: translateY(-50px);
-  }
-  100% { 
-    opacity: 0;
-    transform: translateY(-1000px) rotate(360deg);
-  }
+@keyframes floatUp {
+  0%   { transform: translateY(0); opacity: 0.15; }
+  100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
 }
-
-
 
 @mixin rubberBandAnimation() {
-  // animation-name: rubberBand;
-  animation-name: fadeInRotate;
-  animation-fill-mode: forwards;
-  animation-duration: 1s;
-  animation-fill-mode: both
+  animation-name: rubberBand;
+  animation-fill-mode: both;
+  animation-duration: 0.8s;
 }
+
 @keyframes rubberBand {
-  0% {
-    transform: scale3d(1, 1, 1)
-  }
+  0%   { transform: scale3d(1, 1, 1); }
+  30%  { transform: scale3d(1.25, 0.75, 1); }
+  40%  { transform: scale3d(0.75, 1.25, 1); }
+  50%  { transform: scale3d(1.15, 0.85, 1); }
+  65%  { transform: scale3d(0.95, 1.05, 1); }
+  75%  { transform: scale3d(1.05, 0.95, 1); }
+  100% { transform: scale3d(1, 1, 1); }
+}
 
-  30% {
-    transform: scale3d(1.25, 0.75, 1)
-  }
-
-  40% {
-    transform: scale3d(0.75, 1.25, 1)
-  }
-
-  50% {
-    transform: scale3d(1.15, 0.85, 1)
-  }
-
-  65% {
-    transform: scale3d(0.95, 1.05, 1)
-  }
-
-  75% {
-    transform: scale3d(1.05, 0.95, 1)
-  }
-
-  100% {
-    transform: scale3d(1, 1, 1)
-  }
+// ─── Typing cursor animation ─────────────────────────────────────
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
 }

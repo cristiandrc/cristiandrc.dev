@@ -1,20 +1,53 @@
 @import './normalize.scss';
 @import './variables';
 
-
-:export {
-  primaryColor: $primary-color;
-  primaryColor: $second-color;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-body{
-  background-color: $primary-color;
+html {
+  scroll-behavior: smooth;
 }
-.body{
+
+body {
+  background-color: $bg-color;
+  color: $text-secondary;
+  font-family: 'Inter', sans-serif;
+}
+
+.body {
   overflow-y: hidden;
 }
 
-ul, li, h1, h2, h3, p, button {
+ul, li {
   margin: 0;
-  color: $second-color;
+  padding: 0;
+  list-style: none;
+}
+
+h1, h2, h3, p, button {
+  margin: 0;
+  color: $text-primary;
+}
+
+section {
+  padding: 80px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: $font-mono;
+  font-size: 13px;
+  color: $accent-green;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: clamp(26px, 5vw, 36px);
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 40px;
 }

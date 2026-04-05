@@ -1,14 +1,21 @@
 @import '../../scss/variables';
 
-.footer{
+.footer {
   width: 100%;
-  height: 60px;
   max-width: 1000px;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: solid 1px $second-color;
-  padding: 0 10px;
-  color: $second-color;
+  padding: 24px 20px;
+  text-align: center;
+  border-top: 1px solid $border-color;
+
+  p {
+    font-family: $font-mono;
+    font-size: 13px;
+    color: $text-muted;
+  }
+
+  strong {
+    color: $accent-green;
+    font-weight: 600;
+  }
 }

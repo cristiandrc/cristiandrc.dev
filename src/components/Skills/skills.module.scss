@@ -1,35 +1,90 @@
 @import '../../scss/variables';
 
-.skills{
-  width: 100%;
-  min-height: 275px;
-  background-color: $second-color;
-  padding: 20px;
-  border-radius: 30px;
-  box-shadow: 0 5px 25px -8px rgb(97 218 250 / 50%);
+.skills {
   @include fadeInsideAnimation(50px);
-  p,
-  h2 {
-    color: $primary-color;
-  }
+}
 
-  &_list{
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    margin: 30px auto;
-    text-align: center;
-    padding: 0;
+// ─── Core icon grid ───────────────────────────────────────────────
+.skills_icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.skills_icon_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  background-color: $bg-surface;
+  border: 1px solid $border-color;
+  border-radius: 10px;
+  transition: border-color 200ms, box-shadow 200ms, transform 200ms;
+
+  svg, img { width: 36px; height: 36px; }
+  p { display: none; }
+
+  &:hover {
+    border-color: $accent-green;
+    box-shadow: 0 0 12px rgba($accent-green, 0.2);
+    transform: translateY(-3px);
   }
-  &_items{
-    min-width: 82px;
-    margin: 0 20px 5px;
-  
-    @media (max-width: 400px) {
-      width: 59px;
-    }
+}
+
+// ─── Grouped categories ───────────────────────────────────────────
+.skills_categories {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.category {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.category_label {
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $text-muted;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  min-width: 110px;
+  padding-top: 4px;
+  flex-shrink: 0;
+
+  @media (max-width: 600px) {
+    min-width: unset;
+  }
+}
+
+.tag_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $text-secondary;
+  background-color: $bg-surface;
+  border: 1px solid $border-color;
+  padding: 4px 12px;
+  border-radius: 20px;
+  transition: border-color 150ms, color 150ms;
+
+  &:hover {
+    border-color: rgba($accent-green, 0.4);
+    color: $accent-green;
   }
 }
