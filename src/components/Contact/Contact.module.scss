@@ -1,54 +1,51 @@
 @import '../../scss/variables';
 
-.contact{
-  width: 100%;
-  height: 100%;
-  max-height: 355px;
-  background-color: $second-color;
-  padding: 20px;
-  border-radius: 30px;
-  box-shadow: 0 5px 25px -8px rgb(97 218 250 / 50%);
-  @include fadeInsideAnimation();
-  h2 {
-    color: $primary-color;
-  }
+.contact {
+  @include fadeInUpAnimation();
+  text-align: center;
+}
 
-  &_icons{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 174px;
-    margin: 0 auto;
+.contact_tagline {
+  color: $text-secondary;
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 36px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-    &_link{
-      display: inline-block;
-      color: $primary-color;
-      padding-top: 30px;
-      transition: 0.4s ease;
-      &:hover {
-        transform: scale(1.1);
-      }
-    }
-  }
+.contact_links {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-  &_cv{
-    display: grid;
-    place-items: center;
-    width: 180px;
-    height: 45px;
-    color: $primary-color;
-    font-size: 20px;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 25px;
-    border: solid $primary-color 3px;
-    text-align: center;
-    margin: 10px auto;
-    transition: 0.4s ease;
-    letter-spacing: 1px;
-    &:hover {
-      background-color: $primary-color;
-      color: $second-color;
-    }
+.contact_link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: $font-mono;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  color: $text-secondary;
+  background-color: $bg-surface;
+  border: 1px solid $border-color;
+  padding: 10px 24px;
+  border-radius: 6px;
+  transition: border-color 200ms, color 200ms, box-shadow 200ms;
+
+  &:hover {
+    border-color: $accent-green;
+    color: $accent-green;
+    box-shadow: 0 0 12px rgba($accent-green, 0.15);
   }
+}
+
+.contact_link_cv {
+  background-color: rgba($accent-green, 0.08);
+  border-color: rgba($accent-green, 0.3);
+  color: $accent-green;
 }

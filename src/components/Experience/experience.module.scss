@@ -1,0 +1,91 @@
+@import '../../scss/variables';
+
+.experience {
+  @include fadeInUpAnimation();
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline_item {
+  display: flex;
+  gap: 20px;
+}
+
+.timeline_marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: $accent-green;
+  border: 2px solid $bg-color;
+  box-shadow: 0 0 8px rgba($accent-green, 0.5);
+  flex-shrink: 0;
+}
+
+.line {
+  width: 1px;
+  flex: 1;
+  background-color: $border-color;
+  margin: 6px 0;
+  min-height: 40px;
+}
+
+.timeline_content {
+  padding-bottom: 40px;
+  flex: 1;
+}
+
+.period {
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $accent-green;
+  letter-spacing: 1px;
+}
+
+.role {
+  font-size: 18px;
+  font-weight: 700;
+  color: $text-primary;
+  margin: 6px 0 2px;
+}
+
+.company {
+  font-size: 14px;
+  color: $text-muted;
+  font-family: $font-mono;
+}
+
+.description {
+  color: $text-secondary;
+  line-height: 1.7;
+  font-size: 15px;
+  margin-top: 10px;
+  max-width: 560px;
+}
+
+.tech_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.tech_tag {
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $accent-green;
+  background-color: rgba($accent-green, 0.08);
+  border: 1px solid rgba($accent-green, 0.25);
+  padding: 3px 10px;
+  border-radius: 20px;
+}

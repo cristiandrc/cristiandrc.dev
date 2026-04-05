@@ -1,0 +1,133 @@
+---
+import '../scss/globals.scss';
+import { Header } from '@/components/Header/Header';
+import { Background } from '@/components/Background/Background';
+import Footer from '@/components/Footer/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title = 'Cristian Rojas – Software Developer | Shopify & VTEX IO',
+  description = 'Software Developer with 5+ years of experience specialized in Shopify and VTEX IO. Building scalable e-commerce solutions, custom apps, and high-performance web interfaces with React, TypeScript, and Node.js.',
+  canonical = '/',
+} = Astro.props;
+
+const siteUrl = 'https://www.cristiandrc.dev';
+const ogImage = `${siteUrl}/og-image.png`;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Cristian David Rojas Carvajal',
+  alternateName: 'Cristian Rojas',
+  jobTitle: 'Software Developer | Shopify & VTEX',
+  url: siteUrl,
+  email: 'Cristian.rojas.d@outlook.com',
+  sameAs: [
+    'https://www.linkedin.com/in/cristianrojasc/',
+    'https://github.com/cristiandrc',
+  ],
+  knowsAbout: [
+    'Shopify', 'VTEX IO', 'React', 'TypeScript', 'JavaScript',
+    'Node.js', 'GraphQL', 'Next.js', 'AWS', 'Docker',
+    'E-commerce', 'Frontend Development', 'REST APIs',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'CO',
+  },
+  nationality: 'Colombian',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Cristian Rojas – Portfolio',
+  url: siteUrl,
+  author: {
+    '@type': 'Person',
+    name: 'Cristian David Rojas Carvajal',
+  },
+};
+
+const profilePageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  dateCreated: '2024-01-01',
+  dateModified: '2025-04-05',
+  url: siteUrl,
+  mainEntity: personSchema,
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Cristian David Rojas Carvajal" />
+    <meta name="keywords" content="Cristian Rojas, Software Developer, Shopify Developer, VTEX IO, React, TypeScript, JavaScript, Node.js, GraphQL, E-commerce, Frontend Developer, Colombia, Malta" />
+    <meta name="theme-color" content="#0d1117" />
+    <meta name="language" content="en" />
+    <link rel="canonical" href={`${siteUrl}${canonical}`} />
+    <link rel="alternate" hreflang="es-CO" href={siteUrl} />
+    <link rel="alternate" hreflang="en" href={siteUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cristian Rojas – Portfolio" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={`${siteUrl}${canonical}`} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cristian Rojas – Software Developer Portfolio" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(profilePageSchema)} />
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s) as HTMLScriptElement,dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode!.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-56ZQ33K');
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-56ZQ33K"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe>
+    </noscript>
+    <Background client:load />
+    <Header client:load />
+    <slot />
+    <Footer />
+  </body>
+</html>

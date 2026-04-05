@@ -1,53 +1,80 @@
 @import '../../scss/variables';
 
-.card{
-  width: 290px;
-  min-height: 400px;
-  margin: 50px 10px;
-  padding: 10px;
+.card {
+  background-color: $bg-surface;
+  border: 1px solid $border-color;
   border-radius: 10px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  background-color: $second-color;
-  box-shadow: 0 5px 25px -8px rgb(97 218 250 / 50%);
+  transition: border-color 250ms, transform 250ms, box-shadow 250ms;
   @include fadeInUpAnimation();
+
+  &:hover {
+    border-color: rgba($accent-green, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.card_img_wrap {
+  overflow: hidden;
+  height: 180px;
+
   img {
-    width: 266px;
-    height: 197px;
-    border-radius: 10px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    transition: transform 300ms ease;
   }
 
-  &_title{
-    color: $primary-color;
-    align-items: left;
+  &:hover img {
+    transform: scale(1.03);
   }
+}
 
-  .link_content{
-    height: 120px;
-    .link{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 180px;
-      height: 45px;
-      color: $primary-color;
-      font-size: 20px;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 25px;
-      border: solid $primary-color 3px;
-      text-align: center;
-      margin: 10px auto;
-      transition: 0.4s ease;
-      letter-spacing: 1px;
-    
-      &:hover {
-        background-color: $primary-color;
-        color: $second-color;
-      }
-    }
+.card_body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.card_title {
+  font-size: 17px;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.card_desc {
+  font-size: 14px;
+  color: $text-muted;
+  line-height: 1.6;
+}
+
+.link_content {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: $font-mono;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: $accent-green;
+  border: 1px solid rgba($accent-green, 0.3);
+  padding: 6px 16px;
+  border-radius: 4px;
+  transition: background-color 200ms;
+
+  &:hover {
+    background-color: rgba($accent-green, 0.1);
   }
 }

@@ -1,0 +1,80 @@
+---
+import styles from './experience.module.scss';
+
+interface ExperienceItem {
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+  tech: string[];
+}
+
+const experiences: ExperienceItem[] = [
+  {
+    role: 'Software Developer / Part time',
+    company: 'Experimentality',
+    period: 'July 2025 – Present',
+    description:
+      'Developing and maintaining custom VTEX IO applications for enterprise clients, ensuring performance, scalability, and alignment with business requirements. Implementing UI/UX designs into responsive and accessible web interfaces, and participating in project estimation and cost analysis.',
+    tech: ['VTEX IO', 'React', 'TypeScript', 'GraphQL'],
+  },
+  {
+    role: 'Ecommerce Platform Manager',
+    company: 'Reebok Latam',
+    period: 'July 2024 – July 2025',
+    description:
+      'Led development of web applications and functionalities for country-specific requirements. Conducted technical research and feasibility analysis for expanding the brand\'s digital ecosystem to Shopify, including architecture planning and app integration. Validated OMS integrations and documented best practices for Shopify development.',
+    tech: ['VTEX IO', 'Shopify', 'OMS', 'UI/UX'],
+  },
+  {
+    role: 'Shopify Developer',
+    company: 'Freelance – Remote',
+    period: 'July 2023 – Present',
+    description:
+      'Developing and customizing Shopify stores for retail and fashion brands across LATAM. Integrating third-party apps and APIs for payments, shipping, and analytics. Working with Shopify Functions, Admin API, and GraphQL to build backend integrations, and optimizing store performance.',
+    tech: ['Shopify', 'Liquid', 'GraphQL', 'Admin API', 'JavaScript'],
+  },
+  {
+    role: 'Front End Developer',
+    company: 'Grupo Uribe – GCO',
+    period: 'February 2022 – July 2024',
+    description:
+      'Developed custom VTEX IO applications supporting brand-specific requirements and commercial initiatives across multiple retail businesses. Implemented UI/UX designs aligned with marketing strategies, integrated GA4 tracking, and built landing pages and promotional campaigns.',
+    tech: ['VTEX IO', 'React', 'JavaScript', 'GA4', 'CSS'],
+  },
+  {
+    role: 'IT Support',
+    company: 'Arus',
+    period: 'November 2019 – February 2022',
+    description:
+      'Ensured operational continuity of retail stores for leading fashion brands across the Valle de Aburrá region. Identified and resolved technical issues minimizing downtime, and managed support tickets ensuring timely resolution.',
+    tech: ['IT Support', 'Hardware', 'Ticketing'],
+  },
+];
+---
+
+<section id="experience" class={styles.experience}>
+  <p class="section-label">// experience</p>
+  <h2 class="section-title">Work History</h2>
+  <div class={styles.timeline}>
+    {experiences.map((item, i) => (
+      <div class={styles.timeline_item}>
+        <div class={styles.timeline_marker}>
+          <span class={styles.dot} />
+          {i < experiences.length - 1 && <span class={styles.line} />}
+        </div>
+        <div class={styles.timeline_content}>
+          <span class={styles.period}>{item.period}</span>
+          <h3 class={styles.role}>{item.role}</h3>
+          <span class={styles.company}>{item.company}</span>
+          <p class={styles.description}>{item.description}</p>
+          <ul class={styles.tech_list}>
+            {item.tech.map((t) => (
+              <li class={styles.tech_tag}>{t}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

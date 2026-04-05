@@ -1,0 +1,39 @@
+---
+import styles from './about.module.scss';
+import img from '../../assets/img/profile.jpeg';
+---
+
+<section id="about" class={styles.about}>
+  <p class="section-label">// about me</p>
+  <h2 class="section-title">Who I am</h2>
+  <div class={styles.about_content}>
+    <div class={styles.about_text}>
+      <p>
+        Hey! I'm <strong>Cristian David Rojas Carvajal</strong>, a web developer with
+        over <strong>five years in technology</strong> and four+ years focused on
+        e-commerce and frontend development. I'm based between <strong>Colombia and Malta</strong>.
+      </p>
+      <p>
+        I specialize in <strong>Shopify</strong> and <strong>VTEX IO</strong>, building
+        scalable storefronts and custom apps for retail and fashion brands across LATAM.
+        My stack also covers <strong>React</strong>, <strong>TypeScript</strong>,
+        <strong>Node.js</strong>, REST APIs, and GraphQL — from pixel-perfect UIs to
+        backend integrations.
+      </p>
+      <p>
+        Passionate about performance, conversion-driven design, and clean code.
+        Always learning, always shipping.
+      </p>
+    </div>
+    <div class={styles.about_image_wrap}>
+      <img
+        src={img.src}
+        alt="Cristian Rojas"
+        width="240"
+        height="240"
+        class={styles.about_image}
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

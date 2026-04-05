@@ -1,9 +1,14 @@
-//robots.txt
-
-# Block all crawlers for /accounts
 User-agent: *
-Disallow: /accounts
+Disallow:
 
-# Allow all crawlers
-User-agent: *
+Sitemap: https://www.cristiandrc.dev/sitemap.xml
+
+# AI crawlers — allowed, see /llms.txt
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Googlebot
 Allow: /

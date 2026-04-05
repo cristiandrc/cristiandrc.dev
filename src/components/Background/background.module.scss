@@ -1,35 +1,29 @@
 @import '../../scss/variables';
 
-.background{
-  // background-color: red;
-  position: absolute;
+.background {
+  position: fixed;
   overflow: hidden;
-  z-index: -1;
+  z-index: 0;
   top: 0;
-  bottom: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  pointer-events: none;
 
-  span{
+  span {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    width: 100px;
-    height: 100px;
-    bottom: -150px;
-    min-height: 40px;
-    min-width: 40px;
-    transform: translateY(-50px);
-    // background-color: #858585d8;
-    
-    border-radius: 20px;
+    position: absolute;
+    bottom: -100px;
+    opacity: 0.06;
     @include fadeInBackAnimation();
-    p{
-      display: none;
+
+    svg, img {
+      width: 100%;
+      height: 100%;
     }
+
+    p { display: none; }
   }
 }
-
-
-
-

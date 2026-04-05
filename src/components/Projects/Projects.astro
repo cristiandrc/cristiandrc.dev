@@ -1,0 +1,41 @@
+---
+import styles from './projects.module.scss';
+import Card from '../Card/Card.astro';
+import imgTodoApp      from '../../assets/img/Todo-App.png';
+import imgWeatherApp   from '../../assets/img/Weather-App.png';
+import imgTodoBackEnd  from '../../assets/img/TodoAppBackEnd.png';
+
+const projects = [
+  {
+    name: 'ToDo App',
+    img: imgTodoApp.src,
+    page: 'https://todo-app-cristiandrc.vercel.app/',
+    github: 'https://github.com/cristiandrc/Todo-App',
+    description: 'Full-featured task manager built with React and TypeScript.',
+  },
+  {
+    name: 'Weather App',
+    img: imgWeatherApp.src,
+    page: 'https://weather-app-cdrc.netlify.app/',
+    github: 'https://github.com/cristiandrc/weatherApp',
+    description: 'Real-time weather dashboard consuming an external weather API.',
+  },
+  {
+    name: 'BackEnd ToDo App',
+    img: imgTodoBackEnd.src,
+    page: '',
+    github: 'https://github.com/cristiandrc/BackEndTodoApp',
+    description: 'REST API backend for the ToDo App built with Node.js.',
+  },
+];
+---
+
+<section id="projects" class={styles.projects}>
+  <p class="section-label">// projects</p>
+  <h2 class="section-title">What I've Built</h2>
+  <div class={styles.cards_grid}>
+    {projects.map((p) => (
+      <Card {...p} />
+    ))}
+  </div>
+</section>
