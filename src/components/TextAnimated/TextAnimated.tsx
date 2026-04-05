@@ -1,4 +1,4 @@
-import { LetterAnimated } from "./LatterAnimated";
+import { LetterAnimated } from "./LetterAnimated";
 import styles from "./textAnimated.module.scss";
 
 const TextAnimated = ({ text }: { text: string }) => {
