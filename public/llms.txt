@@ -1,0 +1,42 @@
+# Cristian David Rojas Carvajal
+
+> Software Developer specialized in Shopify & VTEX IO | Colombia / Malta
+
+## About
+
+Web developer with over five years in technology and four+ years focused on e-commerce and frontend development. Specializes in building scalable Shopify storefronts, custom VTEX IO applications, and high-performance web interfaces using React, TypeScript, Node.js, and GraphQL.
+
+## Skills
+
+- Shopify: Liquid, Shopify CLI, Checkout Extensibility, Shopify Functions, Hydrogen, Admin & Storefront API, Online Store 2.0, Metafields, OAuth, Webhooks
+- VTEX IO: IO Builder, Store Framework, Custom Apps, GraphQL API, OMS & Master Data integrations, Checkout Customization, GA4 tracking
+- Frontend: React.js, Next.js, JavaScript, TypeScript, HTML, CSS, Sass
+- Backend: Node.js, Express.js, REST APIs, GraphQL, MongoDB
+- Analytics & SEO: Google Analytics 4, Google Tag Manager, Technical SEO
+- Cloud & Tools: AWS (Lambda, S3, Serverless), Docker, Git
+
+## Experience
+
+- Experimentality — Software Developer / Part time (July 2025–Present)
+- Reebok Latam — Ecommerce Platform Manager (July 2024–July 2025)
+- Freelance – Remote — Shopify Developer (July 2023–Present)
+- Grupo Uribe – GCO — Front End Developer (February 2022–July 2024)
+- Arus — IT Support (November 2019–February 2022)
+
+## Education
+
+- Software Development – Platzi (Sep 2020–Present)
+- Technologist in Systems – SENA (Jul 2017–Jul 2019)
+- English Studies – EC Institute (Dec 2025–Present)
+
+## Languages
+
+- Spanish: Native
+- English: Intermediate B2
+
+## Contact
+
+- Email: Cristian.rojas.d@outlook.com
+- LinkedIn: https://www.linkedin.com/in/cristianrojasc/
+- GitHub: https://github.com/cristiandrc
+- Portfolio: https://www.cristiandrc.dev
