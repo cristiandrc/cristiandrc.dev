@@ -53,7 +53,6 @@ const Line = ({
   return (
     <div className={styles.terminal_line}>
       <span className={styles.prompt}>{typedPrompt}</span>
-      {promptDone && !active && <span className={styles.cursor} />}
       {promptDone && (
         <span className={styles.output}>
           {typedOutput}
@@ -93,7 +92,7 @@ const TerminalHero = () => {
               view my work<span className={styles.cursor} />
             </a>
             <a
-              href="https://drive.google.com/file/d/1MYzx0ccSHaqnrmaTEPdpuoFPzvlxspIb/view?usp=drive_link"
+              href="/Cristian-Rojas-CV.pdf"
               target="_blank"
               rel="noopener"
               className={styles.cta_link_secondary}
