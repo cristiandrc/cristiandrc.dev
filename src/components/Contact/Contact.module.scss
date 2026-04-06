@@ -46,6 +46,18 @@
 
 .contact_link_cv {
   background-color: rgba($accent-green, 0.08);
-  border-color: rgba($accent-green, 0.3);
+  border-color: rgba($accent-green, 0.45);
   color: $accent-green;
+  box-shadow:
+    0 0 0 1px rgba($accent-green, 0.25),
+    0 0 16px rgba($accent-green, 0.2),
+    0 0 32px rgba($accent-green, 0.08);
+
+  &:hover {
+    border-color: $accent-green;
+    box-shadow:
+      0 0 0 1px rgba($accent-green, 0.55),
+      0 0 20px rgba($accent-green, 0.35),
+      0 0 40px rgba($accent-green, 0.18);
+  }
 }

@@ -28,7 +28,10 @@
   border-radius: 50%;
   background-color: $accent-green;
   border: 2px solid $bg-color;
-  box-shadow: 0 0 8px rgba($accent-green, 0.5);
+  box-shadow:
+    0 0 6px rgba($accent-green, 0.85),
+    0 0 14px rgba($accent-green, 0.45),
+    0 0 24px rgba($accent-green, 0.2);
   flex-shrink: 0;
 }
 
