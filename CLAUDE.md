@@ -13,6 +13,24 @@ npm run lint     # Run ESLint
 
 Commits must follow conventional commit format (`feat:`, `fix:`, `chore:`, etc.) — enforced by commitlint via Husky. The `npm run build` must pass before any deploy.
 
+## Git Workflow
+
+If the current branch is `main` (or `master`) when starting new work, create a new branch before making any changes. If already on a feature branch, continue working there.
+
+Branch names must follow the pattern `<type>/<short-description>` using kebab-case, where `<type>` matches the conventional commit type:
+
+| Type | When to use |
+|---|---|
+| `feat` | New feature or visible addition |
+| `fix` | Bug fix |
+| `chore` | Maintenance, config, dependencies |
+| `refactor` | Code restructure with no behavior change |
+| `style` | Visual/CSS-only changes |
+| `docs` | Documentation only |
+| `test` | Adding or updating tests |
+
+Examples: `feat/terminal-animation`, `fix/menu-scroll`, `chore/update-deps`
+
 ## Architecture
 
 Personal portfolio — **single-page Astro 4** site with a dark/dev aesthetic. React is used only for interactive islands via `client:load`.
