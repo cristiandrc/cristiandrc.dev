@@ -89,6 +89,37 @@
   padding: 8px 10px;
 }
 
+.foot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-family: $font-mono;
+  font-size: 11px;
+  color: $text-muted;
+
+  kbd {
+    font-family: inherit;
+    font-size: 10px;
+    line-height: 1;
+    color: $text-secondary;
+    background-color: $bg-surface-2;
+    border: 1px solid $border-color;
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 3px 4px;
+  }
+
+  kbd:last-of-type {
+    margin-right: 5px;
+  }
+}
+
 .logout {
   font-family: $font-mono;
   font-size: 12px;

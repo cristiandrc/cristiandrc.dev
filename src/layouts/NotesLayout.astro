@@ -36,6 +36,9 @@ const notes = (await getCollection('notes')).sort(
         <slot />
       </main>
     </div>
+    <script>
+      import '@/scripts/quickNav';
+    </script>
   </body>
 </html>
 
