@@ -5,7 +5,7 @@
  * Ignora las pulsaciones mientras se escribe en un campo, para no chocar con
  * el filtro del sidebar ni con el formulario del PIN.
  */
-const SEQUENCE = 'nvm';
+const SEQUENCE = 'nvim';
 const RESET_MS = 800;
 const NOTES_PATH = '/notes';
 
