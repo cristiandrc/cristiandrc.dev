@@ -1,0 +1,231 @@
+---
+import '../scss/globals.scss';
+import { getCollection } from 'astro:content';
+import NotesSidebar from '@/components/NotesSidebar/NotesSidebar.astro';
+
+interface Props {
+  title: string;
+  current?: string;
+}
+
+const { title, current } = Astro.props;
+
+const notes = (await getCollection('notes')).sort(
+  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title)
+);
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <meta name="theme-color" content="#0d1117" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="notes-shell">
+      <NotesSidebar notes={notes} current={current} />
+      <main class="notes-main">
+        <slot />
+      </main>
+    </div>
+    <script>
+      import '@/scripts/quickNav';
+    </script>
+  </body>
+</html>
+
+<style lang="scss" is:global>
+  @import '../scss/variables';
+
+  .notes-shell {
+    display: flex;
+    min-height: 100vh;
+    align-items: stretch;
+  }
+
+  .notes-main {
+    flex: 1;
+    min-width: 0;
+    padding: 48px 40px 96px;
+  }
+
+  @media (max-width: 860px) {
+    .notes-shell {
+      flex-direction: column;
+    }
+
+    .notes-main {
+      padding: 24px 20px 64px;
+    }
+  }
+
+  // ─── Tipografía del contenido markdown ─────────────────────────
+  // globals.scss quita bullets y padding a las listas para el sitio
+  // publico; aqui se restauran solo dentro del contenido.
+  .notes-prose {
+    max-width: 780px;
+    color: $text-secondary;
+    line-height: 1.7;
+    font-size: 16px;
+
+    h2 {
+      font-size: 24px;
+      margin: 48px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid $border-color;
+      scroll-margin-top: 24px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin: 32px 0 12px;
+      color: $accent-blue;
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: $text-secondary;
+    }
+
+    a {
+      color: $accent-blue;
+      text-decoration: none;
+      border-bottom: 1px solid rgba($accent-blue, 0.3);
+
+      &:hover {
+        border-bottom-color: $accent-blue;
+      }
+    }
+
+    strong {
+      color: $text-primary;
+      font-weight: 600;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 16px;
+      padding-left: 22px;
+      list-style: revert;
+    }
+
+    li {
+      list-style: revert;
+      margin-bottom: 8px;
+    }
+
+    blockquote {
+      margin: 24px 0;
+      padding: 14px 18px;
+      border-left: 3px solid $accent-green;
+      background-color: rgba($accent-green, 0.06);
+      border-radius: 0 8px 8px 0;
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    kbd {
+      display: inline-block;
+      font-family: $font-mono;
+      font-size: 12px;
+      line-height: 1;
+      color: $text-primary;
+      background-color: $bg-surface-2;
+      border: 1px solid $border-color;
+      border-bottom-width: 2px;
+      border-radius: 5px;
+      padding: 4px 6px;
+      white-space: nowrap;
+    }
+
+    code {
+      font-family: $font-mono;
+      font-size: 13px;
+      color: $accent-green;
+      background-color: $bg-surface;
+      border: 1px solid $border-color;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+
+    pre {
+      background-color: $bg-surface;
+      border: 1px solid $border-color;
+      border-radius: 10px;
+      padding: 16px 18px;
+      overflow-x: auto;
+      margin: 0 0 20px;
+
+      code {
+        background: none;
+        border: none;
+        padding: 0;
+        color: inherit;
+        font-size: 13px;
+      }
+    }
+
+    // Las tablas anchas hacen scroll en su propio contenedor,
+    // el body nunca se desplaza en horizontal.
+    .table-scroll {
+      overflow-x: auto;
+      margin: 0 0 24px;
+      border: 1px solid $border-color;
+      border-radius: 10px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 14px;
+      min-width: 520px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid $border-color;
+      vertical-align: top;
+    }
+
+    th {
+      font-family: $font-mono;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: $accent-green;
+      background-color: $bg-surface;
+      white-space: nowrap;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover td {
+      background-color: rgba($bg-surface, 0.5);
+    }
+  }
+</style>
+
+<script>
+  // Envuelve cada tabla del contenido para que scrollee sola en movil.
+  document.querySelectorAll('.notes-prose table').forEach((table) => {
+    if (table.parentElement?.classList.contains('table-scroll')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'table-scroll';
+    table.parentNode?.insertBefore(wrap, table);
+    wrap.appendChild(table);
+  });
+</script>

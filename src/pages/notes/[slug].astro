@@ -1,0 +1,85 @@
+---
+import { getEntry } from 'astro:content';
+import NotesLayout from '@/layouts/NotesLayout.astro';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+const note = slug ? await getEntry('notes', slug) : undefined;
+
+if (!note) return Astro.redirect('/notes');
+
+const { Content } = await note.render();
+const dateFormat = new Intl.DateTimeFormat('es-CO', { dateStyle: 'medium' });
+---
+
+<NotesLayout title={note.data.title} current={note.slug}>
+  <article>
+    <header class="head">
+      <h1 class="title">{note.data.title}</h1>
+      <p class="lead">{note.data.description}</p>
+      <div class="meta">
+        <div class="tags">
+          {note.data.tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+        <time datetime={note.data.updated.toISOString()}>
+          Actualizado {dateFormat.format(note.data.updated)}
+        </time>
+      </div>
+    </header>
+
+    <div class="notes-prose">
+      <Content />
+    </div>
+  </article>
+</NotesLayout>
+
+<style lang="scss">
+  @import '../../scss/variables';
+
+  .head {
+    max-width: 780px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .title {
+    font-size: clamp(26px, 4.5vw, 34px);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .lead {
+    color: $text-muted;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-family: $font-mono;
+    font-size: 11px;
+    color: $text-muted;
+  }
+
+  .tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    color: $accent-blue;
+    background-color: rgba($accent-blue, 0.1);
+    border-radius: 20px;
+    padding: 3px 8px;
+  }
+</style>

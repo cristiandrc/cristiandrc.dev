@@ -1,0 +1,142 @@
+@import '../../scss/variables';
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 260px;
+  flex-shrink: 0;
+  padding: 28px 20px;
+  background-color: $bg-surface;
+  border-right: 1px solid $border-color;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.brand {
+  font-family: $font-mono;
+  font-size: 16px;
+  font-weight: 600;
+  color: $text-primary;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.prompt {
+  color: $accent-green;
+}
+
+.filter {
+  width: 100%;
+  font-family: $font-mono;
+  font-size: 13px;
+  color: $text-primary;
+  background-color: $bg-color;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  padding: 8px 10px;
+
+  &::placeholder {
+    color: $text-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $accent-green;
+  }
+}
+
+.nav {
+  flex: 1;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+.link {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  color: $text-muted;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border-left: 2px solid transparent;
+  transition: color 200ms, background-color 200ms, border-color 200ms;
+
+  &:hover {
+    color: $text-primary;
+    background-color: $bg-surface-2;
+  }
+}
+
+.active {
+  color: $accent-green;
+  background-color: $bg-surface-2;
+  border-left-color: $accent-green;
+}
+
+.empty {
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $text-muted;
+  padding: 8px 10px;
+}
+
+.foot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-family: $font-mono;
+  font-size: 11px;
+  color: $text-muted;
+
+  kbd {
+    font-family: inherit;
+    font-size: 10px;
+    line-height: 1;
+    color: $text-secondary;
+    background-color: $bg-surface-2;
+    border: 1px solid $border-color;
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 3px 4px;
+  }
+
+  kbd:last-of-type {
+    margin-right: 5px;
+  }
+}
+
+.logout {
+  font-family: $font-mono;
+  font-size: 12px;
+  color: $text-muted;
+  text-decoration: none;
+
+  &:hover {
+    color: $accent-green;
+  }
+}
+
+@media (max-width: 860px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid $border-color;
+  }
+}

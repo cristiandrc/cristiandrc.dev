@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import styles from './notesSidebar.module.scss';
+
+interface Props {
+  notes: CollectionEntry<'notes'>[];
+  current?: string;
+}
+
+const { notes, current } = Astro.props;
+---
+
+<aside class={styles.sidebar}>
+  <a class={styles.brand} href="/notes">
+    <span class={styles.prompt}>~/</span>notes
+  </a>
+
+  <input
+    class={styles.filter}
+    type="search"
+    id="notes-filter"
+    placeholder="Filtrar…"
+    autocomplete="off"
+    aria-label="Filtrar fichas"
+  />
+
+  <nav class={styles.nav} aria-label="Fichas">
+    <ul id="notes-list">
+      {notes.map((note) => (
+        <li data-search={`${note.data.title} ${note.data.tags.join(' ')}`.toLowerCase()}>
+          <a
+            href={`/notes/${note.slug}`}
+            class={note.slug === current ? `${styles.link} ${styles.active}` : styles.link}
+            aria-current={note.slug === current ? 'page' : undefined}
+          >
+            {note.data.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class={styles.empty} id="notes-empty" hidden>Sin resultados</p>
+  </nav>
+
+  <footer class={styles.foot}>
+    <p class={styles.hint}>
+      <kbd>n</kbd><kbd>v</kbd><kbd>i</kbd><kbd>m</kbd> vuelve al inicio
+    </p>
+    <a class={styles.logout} href="/notes/logout">Cerrar sesión</a>
+  </footer>
+</aside>
+
+<script>
+  const input = document.getElementById('notes-filter') as HTMLInputElement | null;
+  const list = document.getElementById('notes-list');
+  const empty = document.getElementById('notes-empty');
+
+  input?.addEventListener('input', () => {
+    const term = input.value.trim().toLowerCase();
+    let visible = 0;
+
+    list?.querySelectorAll<HTMLLIElement>('li').forEach((item) => {
+      const match = !term || (item.dataset.search ?? '').includes(term);
+      item.hidden = !match;
+      if (match) visible += 1;
+    });
+
+    if (empty) empty.hidden = visible > 0;
+  });
+</script>
