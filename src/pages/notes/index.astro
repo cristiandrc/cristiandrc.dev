@@ -1,0 +1,135 @@
+---
+import { getCollection } from 'astro:content';
+import NotesLayout from '@/layouts/NotesLayout.astro';
+
+export const prerender = false;
+
+const notes = (await getCollection('notes')).sort(
+  (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title)
+);
+
+const dateFormat = new Intl.DateTimeFormat('es-CO', { dateStyle: 'medium' });
+---
+
+<NotesLayout title="notes">
+  <header class="head">
+    <p class="eyebrow">Referencia personal</p>
+    <h1 class="title">Fichas</h1>
+    <p class="lead">
+      Atajos y notas de trabajo. {notes.length} ficha{notes.length === 1 ? '' : 's'} disponible{
+        notes.length === 1 ? '' : 's'
+      }.
+    </p>
+  </header>
+
+  <ul class="grid">
+    {notes.map((note) => (
+      <li>
+        <a class="card" href={`/notes/${note.slug}`}>
+          <h2 class="card_title">{note.data.title}</h2>
+          <p class="card_desc">{note.data.description}</p>
+          <div class="card_meta">
+            <div class="tags">
+              {note.data.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+            <time datetime={note.data.updated.toISOString()}>
+              {dateFormat.format(note.data.updated)}
+            </time>
+          </div>
+        </a>
+      </li>
+    ))}
+  </ul>
+</NotesLayout>
+
+<style lang="scss">
+  @import '../../scss/variables';
+
+  .head {
+    margin-bottom: 40px;
+  }
+
+  .eyebrow {
+    font-family: $font-mono;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $accent-green;
+    margin-bottom: 8px;
+  }
+
+  .title {
+    font-size: clamp(28px, 5vw, 36px);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .lead {
+    color: $text-muted;
+    font-size: 15px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    max-width: 900px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    background-color: $bg-surface;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    padding: 20px;
+    text-decoration: none;
+    transition: border-color 250ms, transform 250ms;
+
+    &:hover {
+      border-color: rgba($accent-green, 0.4);
+      transform: translateY(-3px);
+    }
+  }
+
+  .card_title {
+    font-size: 17px;
+    font-weight: 600;
+    color: $text-primary;
+  }
+
+  .card_desc {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.6;
+    color: $text-muted;
+  }
+
+  .card_meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: $font-mono;
+    font-size: 11px;
+    color: $text-muted;
+  }
+
+  .tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    color: $accent-blue;
+    background-color: rgba($accent-blue, 0.1);
+    border-radius: 20px;
+    padding: 3px 8px;
+  }
+</style>
