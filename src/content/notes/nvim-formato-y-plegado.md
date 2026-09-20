@@ -1,12 +1,12 @@
 ---
-title: 'Neovim: formatear un trozo y plegar el código'
-description: 'Qué hace Espacio f según lo que tengas seleccionado, en qué lenguajes funciona de verdad, y cómo moverse por los pliegues que calcula treesitter.'
-tags: ['neovim', 'prettier', 'formato', 'plegado']
-updated: 2026-08-28
+title: 'Neovim: formatear un trozo, plegar el código y leer markdown'
+description: 'Qué hace Espacio f según lo que tengas seleccionado, en qué lenguajes funciona de verdad, cómo moverse por los pliegues que calcula treesitter y cómo leer un .md renderizado sin salir del buffer.'
+tags: ['neovim', 'prettier', 'formato', 'plegado', 'markdown']
+updated: 2026-09-19
 order: 4
 ---
 
-Misma configuración que la nota de git: kickstart sobre Neovim 0.12, tecla líder <kbd>Espacio</kbd>, atajos en secuencia y no a la vez. Aquí van las dos cosas que uso a diario y se olvidan igual de rápido: formatear **solo lo seleccionado** y plegar el código para leer un archivo largo.
+Misma configuración que la nota de git: kickstart sobre Neovim 0.12, tecla líder <kbd>Espacio</kbd>, atajos en secuencia y no a la vez. Aquí van las cosas que uso a diario y se olvidan igual de rápido: formatear **solo lo seleccionado**, plegar el código para leer un archivo largo y leer un markdown sin tragarme los símbolos.
 
 ## Formatear
 
@@ -112,3 +112,21 @@ Después de que el agente reescriba el archivo por debajo, <kbd>z</kbd> <kbd>x</
 | <kbd>z</kbd> <kbd>v</kbd> y <kbd>z</kbd> <kbd>x</kbd> | `zv` solo abre lo necesario para ver la línea. `zx` además recalcula los pliegues. |
 
 Aquí la mayúscula vuelve a ser la versión amplia, igual que en los atajos de git.
+
+## Leer un markdown
+
+Un `.md` abierto en Neovim es texto plano: ves los `#`, los `**` y los backticks tal cual, que es justo lo que VS Code esconde en su vista previa. La diferencia es que aquí no hace falta una segunda ventana —render-markdown.nvim dibuja el resultado **dentro del propio buffer**, así que sigues navegando y editando con los mismos atajos de siempre.
+
+Qué cambia al abrir el archivo: títulos con fondo, viñetas de verdad, tablas alineadas, casillas <kbd>[ ]</kbd> y <kbd>[x]</kbd>, y bloques de código con borde y el nombre del lenguaje arriba. Los símbolos de markdown quedan ocultos **salvo en la línea donde está el cursor**, que se muestra cruda para poder editarla.
+
+| Atajo | Qué hace |
+|---|---|
+| <kbd>Espacio</kbd> <kbd>t</kbd> <kbd>m</kbd> | Alterna entre el markdown renderizado y el texto crudo |
+
+El comando equivalente es `:RenderMarkdown toggle`, con `enable` y `disable` si prefieres fijarlo. Vale la pena apagarlo cuando estás peleándote con una tabla: sin los símbolos ocultos es más fácil ver por qué no cuadran las columnas.
+
+En markdown las líneas largas además se parten por palabras respetando la sangría de las listas, en vez de cortarse en seco contra el borde de la ventana. Es solo para este filetype: en código el texto se sigue viendo en una línea.
+
+> **Sin parser no hay render.** El plugin lee el árbol de treesitter, así que necesita los parsers `markdown` y `markdown_inline` instalados. Si un archivo se ve crudo del todo, es lo primero que hay que mirar con `:checkhealth`.
+
+Combina con lo de arriba: en un markdown los pliegues caen por secciones, así que <kbd>z</kbd> <kbd>M</kbd> convierte un documento largo en su propio índice de títulos. Y formatear sigue siendo cosa de prettier desde modo normal —en markdown la selección no formatea nada, como decía la tabla del principio.

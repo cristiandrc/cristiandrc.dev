@@ -1,8 +1,8 @@
 ---
 title: 'Neovim: revisar lo que cambió un agente'
-description: 'El ciclo de revisar hunk por hunk y hacer git add sin salir del editor: por qué el margen se vacía al stagear, cómo recorrer los cambios y qué hacer cuando nada se refresca.'
+description: 'El ciclo de revisar hunk por hunk y hacer git add sin salir del editor: por qué el margen se vacía al stagear, cómo recorrer los cambios, cómo mirar lo que hizo un commit ya cerrado y qué hacer cuando nada se refresca.'
 tags: ['neovim', 'git', 'atajos', 'agentes']
-updated: 2026-08-27
+updated: 2026-09-19
 order: 3
 ---
 
@@ -59,13 +59,46 @@ Alterna con <kbd>Espacio</kbd> <kbd>t</kbd> <kbd>g</kbd>. Avisa por pantalla con
 | <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>p</kbd> | Diff en ventana flotante |
 | <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>d</kbd> | Diff en ventana partida contra el índice |
 | <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>D</kbd> | Diff en ventana partida contra el último commit |
+| <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>l</kbd> | Diff en ventana partida contra `HEAD~1`: lo que hizo el último commit |
 | <kbd>Espacio</kbd> <kbd>t</kbd> <kbd>w</kbd> | Resalta la palabra exacta que cambió dentro de la línea |
 | <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>b</kbd> | Blame completo de la línea del cursor |
 | <kbd>Espacio</kbd> <kbd>t</kbd> <kbd>b</kbd> | Blame permanente al final de cada línea |
 
-Las tres formas de ver un diff resuelven cosas distintas. <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>i</kbd> es la más rápida para un cambio de una o dos líneas porque no abre nada ni te mueve el cursor. <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>p</kbd> flota encima y se cierra al mover el cursor. <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>d</kbd> parte la ventana y se queda: es la buena cuando el cambio es grande y quieres desplazarte comparando los dos lados. Se cierra con `:q` en cualquiera de los dos paneles.
+Las tres formas de ver un diff resuelven cosas distintas. <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>i</kbd> es la más rápida para un cambio de una o dos líneas porque no abre nada ni te mueve el cursor. <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>p</kbd> flota encima y se cierra al mover el cursor. <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>d</kbd> parte la ventana y se queda: es la buena cuando el cambio es grande y quieres desplazarte comparando los dos lados. Se cierra con la misma tecla que lo abrió.
 
 <kbd>Espacio</kbd> <kbd>t</kbd> <kbd>w</kbd> vale la pena cuando el agente reescribe una línea larga y no es evidente qué movió: en vez de resaltar la línea entera, resalta solo el fragmento distinto.
+
+### Cerrar el diff partido sin dejar restos
+
+`diffthis` no abre solo una ventana: crea además un buffer temporal llamado `gitsigns://…` con la versión que está guardada en git. Cerrarlo con `:q` deja rastro —el buffer temporal sigue en la lista y aparece como una pestaña suelta en la barra de arriba, el modo diff puede quedarse activo y los pliegues de treesitter se pierden, porque el modo diff los pisa con `foldmethod=manual`.
+
+Por eso los tres atajos funcionan como interruptor: **la misma tecla abre y cierra**. Al cerrar se quita la ventana, se borra el buffer temporal de la lista, se apaga el modo diff y vuelven los pliegues, estés en el panel que estés. Quedan dos salidas más para lo mismo: `:DiffCerrar`, y la tecla <kbd>q</kbd> dentro del panel temporal.
+
+Si algún día lo cierras a mano sin los atajos, el paso que se olvida es `:diffoff!`: es lo que devuelve las opciones de ventana a su sitio.
+
+### Qué cambió el último commit
+
+Cuando ya está todo commiteado, <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>D</kbd> no muestra nada, y no es un fallo: compara el archivo **en disco contra `HEAD`**, y si acabas de commitear son idénticos. Para ver el commit ya cerrado hay que comparar contra `HEAD~1`, el commit anterior.
+
+| Atajo | Compara contra | Cuándo |
+|---|---|---|
+| <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>d</kbd> | El índice | Lo que aún no has stageado |
+| <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>D</kbd> | `HEAD` | Todo lo que llevas sin commitear |
+| <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>l</kbd> | `HEAD~1` | Qué hizo el último commit en este archivo |
+
+Y tres comandos para el resto de casos:
+
+| Comando | Qué abre |
+|---|---|
+| `:Gitsigns diffthis HEAD~1` | Lo mismo que <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>l</kbd>, pero aceptando cualquier commit, rama o hash |
+| `:Gitsigns show HEAD~2` | El **contenido** del archivo tal como estaba ahí, no el diff |
+| `:Gitsigns show_commit HEAD` | El commit entero, con todos sus archivos |
+
+Esos buffers son los mismos `gitsigns://`, así que se cierran igual: <kbd>q</kbd> encima, o `:DiffCerrar`.
+
+Queda una cuarta forma que no abre ventana ninguna: `:lua require('gitsigns').change_base('HEAD~1', true)` mueve la base del margen, así que los cambios del último commit se pintan como si estuvieran sin commitear y puedes recorrerlos con <kbd>]</kbd> <kbd>c</kbd> y mirarlos con <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>p</kbd>. Para volver a la normalidad, <kbd>Espacio</kbd> <kbd>t</kbd> <kbd>g</kbd> dos veces.
+
+> **En terminal, `--` y `:` no son lo mismo.** `git show HEAD -- ruta/archivo` enseña el **diff** de ese archivo en ese commit; `git show HEAD:ruta/archivo` enseña su **contenido** completo tal como quedó. Con los dos puntos la ruta va desde la raíz del repo, no desde donde estés parado —dentro de la carpeta funciona `git show HEAD:./archivo`. Y `git log -p -- ruta/archivo` recorre el historial entero de ese archivo, commit por commit.
 
 ### Ver la lista completa antes de recorrerla
 
@@ -148,7 +181,7 @@ Si ni eso, <kbd>Espacio</kbd> <kbd>s</kbd> <kbd>k</kbd> busca entre todos los at
 | Atajos | Diferencia |
 |---|---|
 | <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>s</kbd> y <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>s</kbd> | `hs` stagea el hunk actual. `gs` abre la lista de archivos cambiados. |
-| <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>d</kbd> y <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>D</kbd> | Minúscula compara contra el índice. Mayúscula, contra el último commit. |
+| <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>d</kbd>, <kbd>h</kbd> <kbd>D</kbd> y <kbd>h</kbd> <kbd>l</kbd> | `hd` compara contra el índice, `hD` contra `HEAD` —lo que llevas sin commitear— y `hl` contra `HEAD~1`, que es lo que hizo el último commit. |
 | <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>r</kbd> y <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>R</kbd> | Minúscula descarta un hunk. Mayúscula, el archivo entero. |
 | <kbd>Espacio</kbd> <kbd>x</kbd> y <kbd>Espacio</kbd> <kbd>X</kbd> | Minúscula deja abierto el archivo actual. Mayúscula no deja ninguno. |
 | <kbd>Espacio</kbd> <kbd>q</kbd> y <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>q</kbd> | `q` manda a la quickfix los errores. `hq`, los cambios de git. |
