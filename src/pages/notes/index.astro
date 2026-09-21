@@ -9,6 +9,139 @@ const notes = (await getCollection('notes')).sort(
 );
 
 const dateFormat = new Intl.DateTimeFormat('es-CO', { dateStyle: 'medium' });
+
+// Lo que uso a diario, arriba del todo para no entrar a una ficha a buscarlo.
+const atajos = [
+  {
+    title: 'Ver lo que cambió',
+    items: [
+      { keys: ['Espacio', 'g', 's'], desc: 'Lista de archivos con cambios, con el diff al lado' },
+      { keys: ['Tab'], desc: 'Dentro de esa lista: stagea el archivo o lo saca del índice' },
+      { keys: [']', 'c'], desc: 'Siguiente cambio del archivo' },
+      { keys: ['[', 'c'], desc: 'Cambio anterior' },
+    ],
+    note: 'Lo que stageas desaparece del margen: lo que queda pintado es lo que falta por revisar.',
+  },
+  {
+    title: 'Comparar lado a lado',
+    items: [
+      { keys: ['Espacio', 'h', 'd'], desc: 'Contra el índice: lo que aún no has stageado' },
+      { keys: ['Espacio', 'h', 'D'], desc: 'Contra HEAD: todo lo que llevas sin commitear' },
+      { keys: ['Espacio', 'h', 'l'], desc: 'Contra HEAD~1: lo que hizo el último commit' },
+    ],
+    note: 'La misma tecla que abre el diff lo cierra. Nunca con :q, que deja el buffer temporal colgando.',
+  },
+  {
+    title: 'Buscar en el proyecto',
+    items: [
+      { keys: ['Espacio', 's', 'f'], desc: 'Archivos por nombre' },
+      { keys: ['Espacio', 's', 'F'], desc: 'Lo mismo, con la palabra bajo el cursor ya escrita' },
+      { keys: ['Espacio', 's', 'g'], desc: 'Texto en todo el proyecto' },
+      { keys: ['Espacio', 's', 'G'], desc: 'Lo mismo, sembrado con la palabra bajo el cursor' },
+      { keys: ['Espacio', 's', 'w'], desc: 'Busca ya la palabra bajo el cursor, sin pasar por el prompt' },
+      { keys: ['Espacio', 's', 'r'], desc: 'Reabre la última búsqueda tal como estaba' },
+    ],
+    note: 'La mayúscula siembra el prompt; la minúscula abre en blanco. Espacio s w también funciona sobre una selección.',
+  },
+  {
+    title: 'Dentro del buscador',
+    items: [
+      { keys: ['Ctrl', 'd'], desc: 'Baja el preview de la derecha; Ctrl+u lo sube' },
+      { keys: ['Ctrl', 'f'], desc: 'Mueve el preview de lado, para líneas largas; Ctrl+k al revés' },
+      { keys: ['Ctrl', 'n'], desc: 'Siguiente resultado; Ctrl+p el anterior' },
+      { keys: ['PageDown'], desc: 'Desplaza la lista de resultados, no el preview' },
+      { keys: ['Ctrl', 'r', 'Ctrl', 'w'], desc: 'Mete en el prompt la palabra bajo el cursor de tu archivo' },
+      { keys: ['Ctrl', 'w'], desc: 'Borra la palabra anterior del prompt' },
+      { keys: ['Tab'], desc: 'Marca varios resultados; Ctrl+q los manda a la quickfix' },
+      { keys: ['Ctrl', '/'], desc: 'Lista todos los atajos del buscador, ahí mismo' },
+    ],
+    note: 'Ctrl+u no borra el prompt: Telescope lo usa para el preview. Para borrar, Ctrl+w.',
+  },
+  {
+    title: 'Ir al archivo o a la definición',
+    items: [
+      { keys: ['g', 'f'], desc: 'Abre el archivo del import bajo el cursor' },
+      { keys: ['Ctrl', ']'], desc: 'Va a la definición exacta del símbolo' },
+      { keys: ['Ctrl', 'o'], desc: 'Vuelve a donde estabas; Ctrl+i avanza otra vez' },
+      { keys: ['Ctrl', 'w', 'f'], desc: 'Abre el archivo del import en una ventana partida' },
+      { keys: ['g', 'r', 'd'], desc: 'Definiciones en el buscador; grr referencias, grn renombrar' },
+    ],
+    note: 'Ctrl+] necesita servidor: va en .ts, .tsx y .js. En .astro no hay servidor, así que ahí se usa gf.',
+  },
+  {
+    title: 'Moverte por la línea',
+    items: [
+      { keys: ['0'], desc: 'Al principio de la línea, columna cero' },
+      { keys: ['^'], desc: 'Al primer carácter con contenido: casi siempre es el que quieres' },
+      { keys: ['$'], desc: 'Al final de la línea' },
+      { keys: ['w'], desc: 'Al principio de la palabra siguiente' },
+      { keys: ['b'], desc: 'Al principio de la anterior' },
+      { keys: ['e'], desc: 'Al final de la palabra actual' },
+      { keys: ['f', 'carácter'], desc: 'Salta a la siguiente vez que aparece ese carácter en la línea' },
+      { keys: ['t', 'carácter'], desc: 'Igual, pero se para justo antes' },
+      { keys: [';'], desc: 'Repite ese salto; con , va en sentido contrario' },
+    ],
+    note: 'f y t son lo más rápido dentro de una línea larga: f( te deja en el paréntesis sin contar palabras.',
+  },
+  {
+    title: 'Saltar por el archivo',
+    items: [
+      { keys: ['g', 'g'], desc: 'Al principio del archivo' },
+      { keys: ['G'], desc: 'Al final' },
+      { keys: ['{'], desc: 'Bloque anterior, separado por líneas en blanco' },
+      { keys: ['}'], desc: 'Bloque siguiente' },
+      { keys: ['Ctrl', 'd'], desc: 'Media pantalla abajo' },
+      { keys: ['Ctrl', 'u'], desc: 'Media pantalla arriba' },
+      { keys: ['H'], desc: 'A lo más alto de lo que se ve; M al medio y L abajo' },
+      { keys: ['Ctrl', 'o'], desc: 'Vuelve al sitio del que saltaste' },
+      { keys: ['Ctrl', 'i'], desc: 'Y adelante otra vez' },
+      { keys: ['z', 'z'], desc: 'Centra la pantalla en la línea del cursor' },
+    ],
+    note: 'Ctrl+o es el que más rescata: después de ir a una definición te devuelve a donde estabas. Con scrolloff en 10, H y L se quedan a diez líneas del borde.',
+  },
+  {
+    title: 'Copiar, pegar y borrar',
+    items: [
+      { keys: ['y', 'y'], desc: 'Copia la línea entera' },
+      { keys: ['y', 'i', 'w'], desc: 'Copia la palabra bajo el cursor' },
+      { keys: ['d', 'd'], desc: 'Borra la línea y se la queda en el portapapeles' },
+      { keys: ['d', 'w'], desc: 'Borra hasta el final de la palabra; c w la borra y te deja escribiendo' },
+      { keys: ['D'], desc: 'Borra de aquí al final de la línea; C hace lo mismo y entra en inserción' },
+      { keys: ['x'], desc: 'Borra el carácter bajo el cursor' },
+      { keys: ['p'], desc: 'Pega después del cursor; P antes' },
+      { keys: ['u'], desc: 'Deshace; Ctrl+r rehace' },
+      { keys: ['Option', '↑'], desc: 'Sube la línea o la selección; Option ↓ la baja. Si el terminal se come las flechas, Option k y Option j' },
+    ],
+    note: 'El portapapeles está compartido con el sistema, así que lo que copias aquí se pega en el navegador y al revés. Ojo: borrar también sobrescribe el portapapeles; si no quieres perder lo copiado, usa "_dd.',
+  },
+  {
+    title: 'Sangrar y quitar sangría',
+    items: [
+      { keys: ['Tab'], desc: 'Con texto seleccionado: sangra y mantiene la selección, así que puedes repetir' },
+      { keys: ['Shift', 'Tab'], desc: 'Lo mismo al revés: saca un nivel' },
+      { keys: ['>', '>'], desc: 'Sangra la línea del cursor; << la saca' },
+      { keys: ['3', '>', '>'], desc: 'Tres líneas de golpe, sin seleccionar nada' },
+      { keys: ['='], desc: 'Re-indenta según el lenguaje: == la línea, gg=G el archivo entero' },
+      { keys: ['Ctrl', 't'], desc: 'Escribiendo: sangra sin salir de inserción; Ctrl+d la saca' },
+    ],
+    note: 'Tab y Shift+Tab solo van en selección. En normal, Tab es lo mismo que Ctrl+i para el terminal y se usa para avanzar entre saltos; en inserción son del completado.',
+  },
+  {
+    title: 'Bloques y pliegues',
+    items: [
+      { keys: ['Espacio', 'e'], desc: 'Abre o cierra el árbol de archivos' },
+      { keys: ['z', 'a'], desc: 'Abre o cierra el pliegue bajo el cursor' },
+      { keys: ['[', '{'], desc: 'Desde dentro de un bloque: a la llave que lo abre' },
+      { keys: [']', '}'], desc: 'A la llave que lo cierra' },
+      { keys: ['[', '('], desc: 'Lo mismo con paréntesis: a la que abre' },
+      { keys: [']', ')'], desc: 'A la que cierra' },
+      { keys: ['%'], desc: 'Encima del símbolo: salta a su pareja' },
+      { keys: ['[', 'z'], desc: 'Al principio del pliegue en el que estás' },
+      { keys: [']', 'z'], desc: 'Al final de ese pliegue' },
+    ],
+    note: 'Los corchetes [ ] no tienen salto propio: ahí van % o los objetos de texto (vi[, ci[).',
+  },
+];
 ---
 
 <NotesLayout title="notes">
@@ -21,6 +154,34 @@ const dateFormat = new Intl.DateTimeFormat('es-CO', { dateStyle: 'medium' });
       }.
     </p>
   </header>
+
+  <section class="quick" aria-labelledby="quick_title">
+    <div class="quick_head">
+      <h2 class="quick_title" id="quick_title">Notas rápidas</h2>
+      <p class="quick_lead">El flujo de todos los días: mirar lo que cambió, compararlo y moverse por el archivo.</p>
+    </div>
+
+    <div class="quick_groups">
+      {atajos.map((grupo) => (
+        <div class="quick_group">
+          <h3 class="quick_group_title">{grupo.title}</h3>
+          <ul class="quick_list">
+            {grupo.items.map((item) => (
+              <li class="quick_item">
+                <span class="quick_keys">
+                  {item.keys.map((tecla) => (
+                    <kbd>{tecla}</kbd>
+                  ))}
+                </span>
+                <span class="quick_desc">{item.desc}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="quick_note">{grupo.note}</p>
+        </div>
+      ))}
+    </div>
+  </section>
 
   <ul class="grid">
     {notes.map((note) => (
@@ -69,6 +230,96 @@ const dateFormat = new Intl.DateTimeFormat('es-CO', { dateStyle: 'medium' });
   .lead {
     color: $text-muted;
     font-size: 15px;
+  }
+
+  .quick {
+    max-width: 900px;
+    margin-bottom: 44px;
+  }
+
+  .quick_head {
+    margin-bottom: 18px;
+  }
+
+  .quick_title {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .quick_lead {
+    color: $text-muted;
+    font-size: 14px;
+  }
+
+  .quick_groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  .quick_group {
+    background-color: $bg-surface;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+
+  .quick_group_title {
+    font-family: $font-mono;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: $accent-green;
+    margin-bottom: 14px;
+  }
+
+  .quick_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .quick_item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .quick_keys {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .quick_keys kbd {
+    display: inline-block;
+    font-family: $font-mono;
+    font-size: 11px;
+    line-height: 1;
+    color: $text-primary;
+    background-color: $bg-surface-2;
+    border: 1px solid $border-color;
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    padding: 4px 6px;
+    white-space: nowrap;
+  }
+
+  .quick_desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: $text-secondary;
+  }
+
+  .quick_note {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid $border-color;
+    font-size: 12px;
+    line-height: 1.5;
+    color: $text-muted;
   }
 
   .grid {
