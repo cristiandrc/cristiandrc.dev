@@ -1,8 +1,8 @@
 ---
 title: 'Neovim: revisar lo que cambió un agente'
-description: 'El ciclo de revisar hunk por hunk y hacer git add sin salir del editor: por qué el margen se vacía al stagear, cómo recorrer los cambios, cómo mirar lo que hizo un commit ya cerrado y qué hacer cuando nada se refresca.'
-tags: ['neovim', 'git', 'atajos', 'agentes']
-updated: 2026-09-19
+description: 'El ciclo de revisar hunk por hunk y hacer git add sin salir del editor: por qué el margen se vacía al stagear, cómo recorrer los cambios, cómo mirar lo que hizo un commit ya cerrado, cómo resolver conflictos sin salir del editor y qué hacer cuando nada se refresca.'
+tags: ['neovim', 'git', 'atajos', 'agentes', 'conflictos']
+updated: 2026-09-21
 order: 3
 ---
 
@@ -156,6 +156,48 @@ En modo visual, <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>s</kbd> y <kbd>Espacio</kbd
 
 <kbd>Espacio</kbd> <kbd>x</kbd> es el barrido de después de un commit: quedan abiertos los quince archivos de la tarea anterior, los cierras todos menos en el que estás y la barra vuelve a ser legible. Los que tengan cambios sin guardar preguntan antes de cerrarse.
 
+## Resolver conflictos
+
+Cuando un `merge`, `rebase` o `stash pop` choca con lo que hizo el agente, Git deja los marcadores `<<<<<<<`, `=======` y `>>>>>>>` dentro del archivo. git-conflict.nvim los detecta, pinta cada lado con un color distinto y permite elegir con un atajo en vez de borrar marcadores a mano.
+
+Todos viven bajo <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd>; deja pulsado ese prefijo y Which-key muestra el menú.
+
+| Atajo | Qué hace |
+|---|---|
+| <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd> <kbd>a</kbd> | Conserva la versión **actual** (*ours*) |
+| <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd> <kbd>e</kbd> | Conserva la versión **entrante** (*theirs*) |
+| <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd> <kbd>b</kbd> | Conserva **ambas**, una debajo de la otra |
+| <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd> <kbd>n</kbd> / <kbd>p</kbd> | Siguiente y anterior conflicto |
+| <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd> <kbd>l</kbd> | Manda a la quickfix todos los conflictos del repo |
+| <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd> <kbd>r</kbd> | Vuelve a escanear los marcadores |
+
+Los atajos actúan sobre el conflicto donde está el cursor. Los colores ayudan a no equivocarse de lado: el actual se pinta como `DiffText` y el entrante como `DiffAdd`.
+
+### El ciclo
+
+1. <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd> <kbd>l</kbd> para ver cuántos conflictos hay y en qué archivos; `:copen` abre la lista.
+2. En cada archivo, <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd> <kbd>n</kbd> salta al siguiente bloque.
+3. Elige con <kbd>a</kbd>, <kbd>e</kbd> o <kbd>b</kbd> tras el prefijo. Si ninguna opción sirve tal cual, elige la más cercana y retócala a mano.
+4. Guarda y **stagea** con <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>S</kbd>. Elegir un lado solo edita el buffer; para Git el archivo sigue en conflicto hasta que haces `git add`.
+5. Cuando no queda ninguno, `git merge --continue` o `git rebase --continue` desde el pane del agente.
+
+Si el agente o una herramienta externa cambió los marcadores y el resaltado se quedó desfasado, <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd> <kbd>r</kbd> los vuelve a leer.
+
+### Comandos sin atajo
+
+El plugin trae sus propios comandos, así que hay uno más para el caso raro:
+
+| Comando | Qué hace |
+|---|---|
+| `:GitConflictChooseNone` | Borra los dos lados y deja el bloque vacío |
+| `:GitConflictChooseOurs` / `Theirs` / `Both` | Lo mismo que los atajos, por si prefieres teclearlo |
+
+Los atajos por defecto del plugin (`co`, `ct`, `cb`, `c0`) están **desactivados** a propósito, para que no pisen nada que empiece por `c`: todo pasa por el grupo propio de <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd>.
+
+> **En un rebase, *ours* y *theirs* se invierten.** Durante un `merge`, *ours* es tu rama y *theirs* la que entra. Durante un `rebase`, Git está reaplicando tus commits encima de la otra rama, así que *ours* pasa a ser la rama base y *theirs* tu propio trabajo. Antes de elegir, mira el contenido y no la etiqueta.
+
+> **Diff completo cuando el bloque no basta.** Si el conflicto es grande y quieres ver el contexto, <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>d</kbd> y <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>D</kbd> siguen funcionando igual que siempre.
+
 ## Cuando nada parece actualizarse
 
 Es el problema clásico de tener el editor y el agente en el mismo repo: él escribe en disco, pero el buffer de arriba sigue mostrando lo de antes. Neovim solo mira el disco cuando algo se lo pide, y desde otro pane nadie se lo pide.
@@ -172,7 +214,7 @@ Es el que quieres después de un commit, un `checkout` o un `rebase`, cuando el 
 
 ## Recordar los atajos sin salir del editor
 
-Deja pulsado <kbd>Espacio</kbd> un momento y aparece un menú con los grupos disponibles: `s` para buscar, `h` para hunks de git, `g` para git, `t` para alternar cosas. Es la salida rápida cuando sabes que el atajo empieza por una letra pero no recuerdas la segunda.
+Deja pulsado <kbd>Espacio</kbd> un momento y aparece un menú con los grupos disponibles: `s` para buscar, `h` para hunks de git, `g` para git —con `g` `c` para conflictos—, `t` para alternar cosas. Es la salida rápida cuando sabes que el atajo empieza por una letra pero no recuerdas la segunda.
 
 Si ni eso, <kbd>Espacio</kbd> <kbd>s</kbd> <kbd>k</kbd> busca entre todos los atajos por su descripción.
 
@@ -182,6 +224,7 @@ Si ni eso, <kbd>Espacio</kbd> <kbd>s</kbd> <kbd>k</kbd> busca entre todos los at
 |---|---|
 | <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>s</kbd> y <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>s</kbd> | `hs` stagea el hunk actual. `gs` abre la lista de archivos cambiados. |
 | <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>d</kbd>, <kbd>h</kbd> <kbd>D</kbd> y <kbd>h</kbd> <kbd>l</kbd> | `hd` compara contra el índice, `hD` contra `HEAD` —lo que llevas sin commitear— y `hl` contra `HEAD~1`, que es lo que hizo el último commit. |
+| <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>s</kbd> y <kbd>Espacio</kbd> <kbd>g</kbd> <kbd>c</kbd> | `gs` abre la lista de archivos cambiados. `gc` es el prefijo de los conflictos y no hace nada solo. |
 | <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>r</kbd> y <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>R</kbd> | Minúscula descarta un hunk. Mayúscula, el archivo entero. |
 | <kbd>Espacio</kbd> <kbd>x</kbd> y <kbd>Espacio</kbd> <kbd>X</kbd> | Minúscula deja abierto el archivo actual. Mayúscula no deja ninguno. |
 | <kbd>Espacio</kbd> <kbd>q</kbd> y <kbd>Espacio</kbd> <kbd>h</kbd> <kbd>q</kbd> | `q` manda a la quickfix los errores. `hq`, los cambios de git. |
